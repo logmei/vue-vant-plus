@@ -1,5 +1,5 @@
 # vant-plus
-
+> 真的移动端增加的公共组件库
 ## Project setup
 ```
 npm install
