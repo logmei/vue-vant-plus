@@ -1,17 +1,18 @@
 <template>
   <div id="app">
-    <Debounce/>
+    <Calendar/>
   </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import Debounce from './components/debounce.vue'
+// import Debounce from './components/debounce.vue'
+import Calendar from './components/calendar.vue'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    Debounce
+    Calendar
   }
 }
 </script>
