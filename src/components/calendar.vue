@@ -4,10 +4,10 @@
       ref="Calendar"
       :markDateMore="arr"
       :markDate="arr2"
-      v-on:isToday="clickToday"
+      @isToday="clickToday"
       agoDayHide="1530115221"
-      v-on:choseDay="clickDay"
-      v-on:changeMonth="changeDate"
+      @choseDay="clickDay"
+      @changeMonth="changeDate"
     ></Calendar>
   </div>
 </template>
@@ -27,13 +27,11 @@ export default {
   methods: {
     clickDay(data) {
       console.log('选中了', data) // 选中某天
-      this.$toast('选中了' + data)
     },
     clickToday(data) {
       console.log('跳到了本月今天', data) // 跳到了本月
     },
     changeDate(data) {
-      this.$toast('切换到的月份为' + data)
       console.log('左右点击切换月份', data) // 左右点击切换月份
     },
     demo() {
@@ -95,6 +93,9 @@ h3 {
 }
 .wh_container >>> .wh_content_all {
   /* background-color: red; */
+  border: 1px solid #eeeeee;
+  border-radius: 7px;
+  box-shadow: 0 0 10px #989898
 }
 
 .wh_container >>> .mark1::after{
