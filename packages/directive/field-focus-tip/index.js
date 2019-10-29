@@ -14,7 +14,7 @@ const install = Vue => {
   Vue.directive(FieldShowTip.name, FieldShowTip)
 }
 
-if (typeof window!=='undefined' && window.Vue) {
+if (typeof window !== 'undefined' && window.Vue) {
   window[FieldShowTip.name] = FieldShowTip
   window.Vue.use(install)
 }

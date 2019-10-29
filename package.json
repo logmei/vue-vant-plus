@@ -14,7 +14,8 @@
     "lib": "vue-cli-service build --target lib --name vant-plus --dest lib packages/index.js"
   },
   "dependencies": {
-    "core-js": "^3.1.2"
+    "core-js": "^3.1.2",
+    "less-loader": "^5.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.0.0",
@@ -25,6 +26,7 @@
     "babel-plugin-import": "^1.12.2",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "less": "^3.10.3",
     "postcss-pxtorem": "^4.0.1",
     "vant": "^2.2.9",
     "vue": "^2.6.10",
