@@ -1,18 +1,27 @@
 <template>
 <div class="vlp-search">
+  <form action="/">
    <van-search
-    v-model="searchValue"
+    v-model.trim="searchValue"
     :placeholder="placeholder"
     show-action
     shape="round"
     @search="onSearch"
     @clear="onClear"
     @input="showTips"
+    @cancel="onCancel"
   >
-  <div slot="action" @click="onSearch">{{searchText}}</div>
+
+  <div v-if="!showCancelButton" slot="action" @click="onSearchAction">{{searchText}}</div>
 </van-search>
-<div class="list">
-    <div v-for="(item,index) in list" :key="index" v-html="item" class="item">
+ </form>
+<div class="list" v-show="visible">
+    <div
+    v-for="(item,index) in list"
+    :key="index"
+    v-html="item"
+    class="item"
+    @click.native.stop="chooseOne(item)">
     </div>
   </div>
 </div>
@@ -20,6 +29,17 @@
 <script>
 import { Search } from 'vant'
 import { debounce, throttle } from '../../utils'
+/**
+ * interface的response返回格式：
+ * {
+ *    code:0,//返回的都是成功的，失败的统一拦截
+ *    msg:'',
+ *    result:[
+ *      '12345',
+ *      'aaaaa'
+ *    ]
+ * }
+ */
 export default {
   name: 'VlpSearch',
   components: {
@@ -31,20 +51,35 @@ export default {
       required: false,
       default: ''
     },
+    alias: {
+      type: String,
+      required: false,
+      default: 'value'
+    },
+    showCancelButton: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
     placeholder: {
       type: String,
       required: false,
       default: ''
     },
-    realTime: {// 实时查询
-      type: Boolean,
-      required: false,
-      default: false
-    },
     searchText: {
       type: String,
       required: false,
       default: '搜索'
+    },
+    tipInterface: {// 提示接口
+      type: Function,
+      required: false,
+      default: undefined
+    },
+    params: {
+      type: Object,
+      required: false,
+      default: () => {}
     }
   },
   computed: {
@@ -59,11 +94,8 @@ export default {
   },
   data() {
     return {
-      list: [
-        '中国撒开绿灯飞机',
-        '士大夫中国烧烤',
-        '中国'
-      ]
+      list: [],
+      visible: false
     }
   },
   mounted() {
@@ -76,16 +108,61 @@ export default {
         return v
       })
     },
+    // 点击清除触发
     onClear() {
       console.log('clear')
+      this.clearTipOrEmit()
     },
-    onSearch: debounce(function(evt) {
-      this.$emit('search', this.searchValue)
+    // 回车执行
+    onSearch: debounce(function(v) {
+      console.log('onSearch...........', v)
+      if ((v.trim())) {
+        this.initTipListOrEmit(v)
+      }
     }, 1000, true),
-    showTips: throttle(function(evt) {
-      console.log('showTips......', this.searchValue)
-    }, 500, { leading: false, trailing: false })
-
+    // 搜索按钮
+    onSearchAction: debounce(function(v) {
+      console.log('onSearchAction...........', this.searchValue)
+      this.initTipListOrEmit(this.searchValue)
+    }, 1000, true),
+    // 输入内容后触发
+    showTips: throttle(function(v) {
+      console.log('showTips...........', v, v.trim())
+      if ((v.trim())) this.initTipListOrEmit(v)
+      else this.clearTipOrEmit()
+    }, 1000),
+    // 点击取消触发
+    onCancel: debounce(function() {
+      console.log('cancel............')
+      this.clearTipOrEmit()
+    }, 1000, true),
+    chooseOne(v) {
+      this.$emit('search', v)
+    },
+    // 搜索提示
+    showTipList(v) {
+      this.tipInterface &&
+      typeof this.tipInterface === 'function' &&
+      this.tipInterface(this.getParams(v)).then(response => {
+        this.list = response && response.result
+        this.initList()
+        this.visible = true
+      })
+    },
+    // 获取参数
+    getParams(v) {
+      return { ...this.params, [this.alias]: v }
+    },
+    // 初始化列表或emit
+    initTipListOrEmit(v) {
+      this.tipInterface && this.showTipList(v.trim())
+      !this.tipInterface && this.$emit('search', v.trim())
+    },
+    clearTipOrEmit() {
+      this.list = []
+      this.visible = false
+      !this.tipInterface && this.$emit('search', '')
+    }
   }
 
 }

@@ -3,7 +3,6 @@ import FieldTip from './directive/field-focus-tip'
 
 import VlpButton from './components/button'
 import VlpCalendar from './components/calendar'
-import VlpPullRefresh from './components/pullRefresh'
 import VlpSearch from './components/search'
 // 自定义指令
 const directives = {
@@ -14,7 +13,6 @@ const directives = {
 const components = {
   VlpButton,
   VlpCalendar,
-  VlpPullRefresh,
   VlpSearch
 }
 
@@ -40,6 +38,5 @@ export {
   FieldTip,
   VlpButton,
   VlpCalendar,
-  VlpPullRefresh,
   VlpSearch
 }

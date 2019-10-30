@@ -289,6 +289,7 @@ export function debounce(func, wait, immediate) {
     if (last < wait && last > 0) {
       timeout = setTimeout(later, wait - last)
     } else {
+      window.clearTimeout(timeout)
       timeout = null
       // 如果设定为immediate===true，因为开始边界已经调用过了此处无需调用
       if (!immediate) {

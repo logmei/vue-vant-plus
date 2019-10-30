@@ -7,7 +7,9 @@
 
       <vlp-search
       v-model="searchValue"
-      :real-time="true">查询</vlp-search>
+      placeholder="服务单号/客户名称"
+      :tipInterface="searchListInterface"
+      :params="{id:23}">查询</vlp-search>
     <!-- </vlp-pull-refresh> -->
   </div>
 </template>
@@ -16,6 +18,7 @@
 import Vue from 'vue'
 import VantPlus from '../../packages'
 Vue.use(VantPlus)
+import { searchList } from '../test/interface.js'
 import { Divider } from 'vant'
 Vue.use(Divider)
 
@@ -28,7 +31,8 @@ export default {
     return {
       loading: false,
       refreshLoading: false,
-      searchValue: '中国'
+      searchValue: '',
+      searchListInterface: searchList
     }
   }
 }
