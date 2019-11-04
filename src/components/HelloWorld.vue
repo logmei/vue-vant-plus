@@ -11,6 +11,8 @@
       :tipInterface="searchListInterface"
       :params="{id:23}">查询</vlp-search>
     <!-- </vlp-pull-refresh> -->
+    ---{{ $route.params.id }}---
+    <a href="tel:400-0000-688">400-0000-688</a>
   </div>
 </template>
 
@@ -18,7 +20,7 @@
 import Vue from 'vue'
 import VantPlus from '../../packages'
 Vue.use(VantPlus)
-import { searchList } from '../test/interface.js'
+import { searchList } from '../api/listPage'
 import { Divider } from 'vant'
 Vue.use(Divider)
 
