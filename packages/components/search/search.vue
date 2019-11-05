@@ -21,7 +21,7 @@
     :key="index"
     v-html="item"
     class="item"
-    @click.native.stop="chooseOne(item)">
+    @click="chooseOne(item)">
     </div>
   </div>
 </div>
@@ -137,7 +137,11 @@ export default {
       this.clearTipOrEmit()
     }, 1000, true),
     chooseOne(v) {
-      this.$emit('search', v)
+      const ele = document.createElement('span')
+      ele.innerHTML = v
+      console.log('chooseOne', ele.innerText)
+      this.$emit('search', ele.innerText)
+      this.visible = false
     },
     // 搜索提示
     showTipList(v) {
@@ -183,7 +187,7 @@ export default {
       margin-right: auto;
       text-align: left;
       text-indent: 16px;
-
+      cursor: pointer;
     }
   }
 }
