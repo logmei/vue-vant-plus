@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import Detail from '../detail/index.vue'
+import Detail from '../detail'
 import { InitCardInfo } from '../../utils/handleListInfo.js'
 /**
  * {

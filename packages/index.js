@@ -1,9 +1,13 @@
 import Line from './directive/line'
 import FieldTip from './directive/field-focus-tip'
 
+import handleListInfo from './utils/handleListInfo.js'
+
 import VlpButton from './components/button'
 import VlpCalendar from './components/calendar'
 import VlpSearch from './components/search'
+import VlpList from './components/list'
+import VlpDetail from './components/detail'
 // 自定义指令
 const directives = {
   Line,
@@ -13,7 +17,9 @@ const directives = {
 const components = {
   VlpButton,
   VlpCalendar,
-  VlpSearch
+  VlpSearch,
+  VlpList,
+  VlpDetail
 }
 
 const install = Vue => {
@@ -38,5 +44,8 @@ export {
   FieldTip,
   VlpButton,
   VlpCalendar,
-  VlpSearch
+  VlpSearch,
+  VlpList,
+  VlpDetail,
+  handleListInfo
 }

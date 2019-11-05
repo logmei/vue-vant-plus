@@ -1,10 +1,11 @@
 <template>
-<div class="vlp-search">
+<div class="vlp-search" v-show="layoutVisible">
   <form action="/">
    <van-search
     v-model.trim="searchValue"
     :placeholder="placeholder"
     show-action
+    clearable
     shape="round"
     @search="onSearch"
     @clear="onClear"
@@ -48,7 +49,7 @@ export default {
   props: {
     value: {
       type: String,
-      required: false,
+      required: true,
       default: ''
     },
     alias: {
@@ -80,6 +81,11 @@ export default {
       type: Object,
       required: false,
       default: () => {}
+    },
+    displayVisible: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   computed: {
@@ -89,6 +95,14 @@ export default {
       },
       get: function() {
         return this.value
+      }
+    },
+    layoutVisible: {
+      set: function(v) {
+        this.$emit('update:displayVisible', v)
+      },
+      get: function() {
+        return this.displayVisible
       }
     }
   },
@@ -135,13 +149,16 @@ export default {
     onCancel: debounce(function() {
       console.log('cancel............')
       this.clearTipOrEmit()
+      this.layoutVisible = false
     }, 1000, true),
     chooseOne(v) {
       const ele = document.createElement('span')
       ele.innerHTML = v
       console.log('chooseOne', ele.innerText)
       this.$emit('search', ele.innerText)
+      this.list = []
       this.visible = false
+      this.layoutVisible = false
     },
     // 搜索提示
     showTipList(v) {
@@ -163,6 +180,7 @@ export default {
       !this.tipInterface && this.$emit('search', v.trim())
     },
     clearTipOrEmit() {
+      console.log('clearTipOrEmit.........')
       this.list = []
       this.visible = false
       !this.tipInterface && this.$emit('search', '')
@@ -173,6 +191,12 @@ export default {
 </script>
 <style lang="less" scoped>
 .vlp-search{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    top: 0;
+    z-index: 1;
   .list{
     border: 1px solid #bfbfbf;
     border-radius: 5px;

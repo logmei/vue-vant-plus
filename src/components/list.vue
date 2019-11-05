@@ -1,27 +1,62 @@
 <template>
+<div>
+  <van-sticky>
+<van-nav-bar
+  title="标题"
+  left-text="返回"
+  left-arrow
+
+>
+  <van-icon name="search" slot="right" @click="visible=true"/>
+</van-nav-bar>
+</van-sticky>
+
   <List
   :interface-fun="searchList"
   :columns = "columns"
   ></List>
+  <Search
+  v-model="searchValue"
+  class="search-class"
+  :displayVisible.sync="visible"
+  :tipInterface="searchListInterface"
+  @search="searchFun"></Search>
+</div>
+
 </template>
 <script>
+import { NavBar, Icon, Row, Sticky } from 'vant'
 import List from '../../packages/components/list/list.vue'
+import Search from '../../packages/components/search/search.vue'
 import { cardLabel } from './list.js'
-import { searchListObj } from '../api/listPage.js'
+import { searchListObj, searchList } from '../api/listPage.js'
 export default {
   components: {
-    List
+    List,
+    Search,
+    [NavBar.name]: NavBar,
+    [Icon.name]: Icon,
+    [Row.name]: Row,
+    [Sticky.name]: Sticky
   },
   data() {
     return {
       searchList: searchListObj,
-      columns: cardLabel
+      searchListInterface: searchList,
+      columns: cardLabel,
+      visible: false,
+      searchValue: ''
     }
   },
   methods: {
-    // 处理数据
-    // LabelArray：模板数据结构  DTO：后端返回数据, old:是否使用原来labelArray对象
-
+    searchFun(v) {
+      console.log('searchFun', v)
+    }
   }
 }
 </script>
+<style lang="less" scoped>
+.search-class{
+  position: absolute;
+}
+</style>

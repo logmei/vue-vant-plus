@@ -36,6 +36,7 @@
 import { List, Cell, PullRefresh } from 'vant'
 import Card from './card.vue'
 export default {
+  name: 'VlpList',
   props: {
     interfaceFun: {
       type: Function,
@@ -102,6 +103,11 @@ export default {
       error: false
     }
   },
+  watch: {
+    parameter: function() {
+      this.onLoad()
+    }
+  },
   computed: {
     finishedMsg: function() {
       return this.finishedText || `共找到${this.total}条记录,已无更多`
@@ -127,6 +133,7 @@ export default {
       }, 1000)
     },
     onLoad(isRefresh) {
+      if (this.refreshDisabled) return
       const pagenum = this.pageNum + 1
       // if (pagenum > this.total) return
       const params = { pageNum: pagenum, pageSize: this.pageSize, ...this.parameter }

@@ -1,5 +1,6 @@
+import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+Vue.use(VueRouter)
 const routes = [
   { path: '/calendar', component: () => import('../components/calendar.vue') },
   { path: '/debounce', component: () => import('../components/debounce.vue') },

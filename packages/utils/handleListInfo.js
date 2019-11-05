@@ -42,4 +42,5 @@ export function InitCardInfo(LabelArray, DTO, old) {
   })
   return old ? LabelArray : Data
 }
+export default InitCardInfo
 

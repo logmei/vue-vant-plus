@@ -1,5 +1,11 @@
 <template>
    <vant-button
+   :type="type"
+   :size="size"
+   :text="text"
+   :color="color"
+   :icon="icon"
+   :tag="tag"
    @click="handleClick"
    @touchstart="handleTouchstart"
    >
