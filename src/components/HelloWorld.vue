@@ -11,6 +11,7 @@
       :tipInterface="searchListInterface"
       :params="{id:23}">查询</vlp-search>
     <!-- </vlp-pull-refresh> -->
+
   </div>
 </template>
 
