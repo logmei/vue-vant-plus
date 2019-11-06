@@ -1,6 +1,6 @@
 
 <template>
-  <section v-if="isShowCalendar" class="wh_container">
+  <section v-if="isShowCalendar"  class="wh_container">
     <div class="wh_content_all">
       <div class="wh_top_changge">
         <div>
@@ -26,6 +26,7 @@
         <div class="wh_content_item" v-for="(item,index) in list" :key="index" @click="clickDay(item,index)">
           <div
             class="wh_item_date"
+            ref="isToday"
             v-bind:class="[{ wh_isMark: item.isMark},{wh_other_dayhide:item.otherMonth!=='nowMonth'},{wh_want_dayhide:item.dayHide},{wh_isToday:item.isToday},{wh_chose_day:item.chooseDay},setClass(item)]"
           >{{item.id}}</div>
         </div>
@@ -278,10 +279,10 @@ li {
 .wh_gobackToday{
   position: absolute;
   font-size: 12px;
-  background: rgba(74, 146, 2, 0.719);
-  border: 1px solid #eee;
+  background: white;
+  border: 1px solid #D3D3D3;
   border-radius: 6px;
-  padding: 1%;
+  padding: 1% 2%;
   top: 25%;
   left: 1.5%;
 }
@@ -397,10 +398,10 @@ wh_content_item_tag {
   border-radius: 100px;
 }
 .wh_content_item .wh_chose_day {
-  background: rgb(240, 166, 247);
-  border-radius: 100px;
+  background: #23C2B7;
+  border-radius: 100px
 }
-.fontColorRed{
+/* .fontColorRed{
     color: red;
-  }
+  } */
 </style>

@@ -24,9 +24,9 @@ export default {
       limitDate: '',
       todayDate: '',
       markDate: [],
-      isShowBtn: false,
+      isShowBtn: true,
       chDate: '',
-      isShowCalendar: false,
+      isShowCalendar: true,
       operatorDate: []
     }
   },
@@ -60,7 +60,7 @@ export default {
 <style  scoped>
 .mainCalendar >>>
   .wh_isToday {
-    background-color: rgb(30, 160, 235);
+    background-color:#F1F1F1;
     position: relative;
   }
   .mainCalendar >>>
@@ -71,7 +71,7 @@ export default {
     font-size: 2px;
     transform: scale(.8);
     top: -30%;
-    color: white;
+    color: black;
   }
 .mainCalendar >>> .mark1 {
   position: relative;
