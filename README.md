@@ -414,3 +414,74 @@ export default {
   }
 }
 ```
+### 日历组件：vlp-calendar
+ #### 1、引入指令
+  ```
+  import {VlpCalendar} from 'vant-plus'
+  ```
+
+   #### 2、局部注册
+  ```
+  components: {
+      VlpCalendar
+    }
+  ```
+   #### 3、全局注册
+  ```
+  Vue.use(VlpCalendar)
+  ``` 
+   #### 4、属性
+   | 参数 | 说明 | 类型 | 是否必填| 默认值|
+|------|------------|------------|----------|----|
+| agoDayHide  | 某个日期以前的不允许点击  时间戳10位  | String | false |  |
+| isWeek | 是否显示周几 | Boolean | true
+| propWord | 可传入内容 (周、星期) | String | '周'
+| isShowBtn  | 左上角是否显示'回今天'按钮 | Boolean| false | false |
+| todayBack | 可传入按钮显示值，只有isShowBtn为true时支持| String| false|'回今天'
+| isShowCalendar  | 控制日历的显示和隐藏  | Boolean | false | false |
+| operatorDate  | 入口，可以自定义某个日期，只支持数组第一项 | Array| false | [] |
+| markDateMore  | 如果需要某月的几天被标注，传当月的日期数组。如["2018/2/2","2018/2/6"]被会标注（相同的标记） | Array | false | |
+| markDate | arr=['2018/4/1','2018/4/3'] 标记4月1日和4月3日 简单标记    | Array| false |  |
+   #### 5、事件
+  | 参数 | 说明 | 类型 |
+|------|------------|------------|----------|----|
+| choseDay  | 选中某天调用的方法，返回选中的日期 YY-MM-DD  | 
+| isToday  | 切换月份的时候，如果切到当前月份，调用这个方法，返回当前月今天  | 
+| changeMonth  | 切换月份调用的方法，返回切换到某月的日期 YY-MM-DD  | 
+
+ #### 6、使用示例
+
+```html
+<vlp-calendar
+    ref="Calendar"
+    @choseDay="clickDay"
+    @isToday="clickToday"
+    @changeMonth="changeDate"
+    :agoDayHide="limitDate"
+    :isShowBtn="isShowBtn"
+    :isShowCalendar="isShowCalendar"
+    :operatorDate = "operatorDate"
+    :markDateMore="markDate"
+    :todayBack="按钮内容"
+    :isWeek="false"
+    />
+```
+```js
+import {  VlpCalendar } from 'vant-plus'
+export default {
+  components: {
+    VlpCalendar
+  },
+  methods: {
+    clickToday(v) {
+      
+    },
+    clickDay(v) {
+      
+    },
+    changeDate(v) {
+
+    }
+  }
+}
+```

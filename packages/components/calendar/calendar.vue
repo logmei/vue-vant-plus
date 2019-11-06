@@ -4,7 +4,7 @@
     <div class="wh_content_all">
       <div class="wh_top_changge">
         <div>
-          <span v-if="isShowBtn" class="wh_gobackToday" @click="gobackToday">回今天</span>
+          <span v-if="isShowBtn" class="wh_gobackToday" @click="gobackToday">{{todayBack}}</span>
         </div>
         <div class="wh_top_li_changge">
           <li @click="PreMonth(myDate,false)">
@@ -47,6 +47,18 @@ export default {
     }
   },
   props: {
+    propWord: {
+      type: String,
+      default: '周'
+    },
+    isWeek: {
+      type: Boolean,
+      default: true
+    },
+    todayBack: {
+      type: String,
+      default: '回今天'
+    },
     operatorDate: {
       type: Array,
       default: () => []
@@ -156,8 +168,7 @@ export default {
     getList: function(date, chooseDay, isChosedDay = true) {
       const newDate = timeUtil.dateFormat(date)// 初始化及backToday
       const [markDate, markDateMore] = this.forMatArgs()
-      // this.dateTop = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 周${date.getDay()}`
-      this.dateTop = `${newDate} 周${this.textTop[new Date(date).getDay()]}`
+      this.dateTop = this.isWeek === true ? `${newDate} ${this.propWord}${this.textTop[new Date(date).getDay()]}` : `${newDate}`
       const arr = timeUtil.getMonthList(this.myDate)
       for (let i = 0; i < arr.length; i++) {
         let markClassName = ''
