@@ -1,19 +1,25 @@
 
 <template>
-  <section class="wh_container">
+  <section v-if="isShowCalendar" class="wh_container">
     <div class="wh_content_all">
       <div class="wh_top_changge">
-        <li @click="PreMonth(myDate,false)">
+        <div>
+          <span v-if="isShowBtn" class="wh_gobackToday" @click="gobackToday">回今天</span>
+        </div>
+        <div class="wh_top_li_changge">
+          <li @click="PreMonth(myDate,false)">
           <div class="wh_jiantou1"></div>
         </li>
         <li class="wh_content_li">{{dateTop}}</li>
         <li @click="NextMonth(myDate,false)">
           <div class="wh_jiantou2"></div>
         </li>
+        </div>
+
       </div>
       <div class="wh_content">
         <div class="wh_content_item" v-for="(tag,index) in textTop" :key="index">
-          <div class="wh_top_tag">{{tag}}</div>
+          <div class="wh_top_tag" :class="{'fontColorRed':tag==='六'||tag==='日'}">{{tag}}</div>
         </div>
       </div>
       <div class="wh_content">
@@ -40,6 +46,18 @@ export default {
     }
   },
   props: {
+    operatorDate: {
+      type: Array,
+      default: () => []
+    },
+    isShowCalendar: {
+      type: Boolean,
+      default: () => false
+    },
+    isShowBtn: {
+      type: Boolean,
+      default: () => false
+    },
     markDate: {
       type: Array,
       default: () => []
@@ -50,7 +68,7 @@ export default {
     },
     textTop: {
       type: Array,
-      default: () => ['一', '二', '三', '四', '五', '六', '日']
+      default: () => ['日', '一', '二', '三', '四', '五', '六']
     },
     sundayStart: {
       type: Boolean,
@@ -70,6 +88,10 @@ export default {
     this.myDate = new Date()
   },
   methods: {
+    // 回今天
+    gobackToday() {
+      this.ChoseMonth(new Date())
+    },
     intStart() {
       timeUtil.sundayStart = this.sundayStart
     },
@@ -80,7 +102,7 @@ export default {
     },
     clickDay: function(item, index) {
       if (item.otherMonth === 'nowMonth' && !item.dayHide) {
-        this.getList(this.myDate, item.date)
+        this.getList(item.date, item.date)
       }
       if (item.otherMonth !== 'nowMonth') {
         item.otherMonth === 'preMonth'
@@ -131,8 +153,10 @@ export default {
       return [markDate, markDateMore]
     },
     getList: function(date, chooseDay, isChosedDay = true) {
+      const newDate = timeUtil.dateFormat(date)// 初始化及backToday
       const [markDate, markDateMore] = this.forMatArgs()
-      this.dateTop = `${date.getFullYear()}年${date.getMonth() + 1}月`
+      // this.dateTop = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 周${date.getDay()}`
+      this.dateTop = `${newDate} 周${this.textTop[new Date(date).getDay()]}`
       const arr = timeUtil.getMonthList(this.myDate)
       for (let i = 0; i < arr.length; i++) {
         let markClassName = ''
@@ -156,7 +180,7 @@ export default {
         }
         const flag = !k.dayHide && k.otherMonth === 'nowMonth'
         if (chooseDay && chooseDay === nowTime && flag) {
-          this.$emit('choseDay', nowTime)
+          this.$emit('choseDay', { 'calendarDate': nowTime, 'weekDay': this.textTop[new Date(date).getDay()] })
           this.historyChose.push(nowTime)
           k.chooseDay = true
         } else if (
@@ -174,6 +198,12 @@ export default {
     this.getList(this.myDate)
   },
   watch: {
+    operatorDate: {
+      handler(val, oldVal) {
+        this.ChoseMonth(new Date(val[0]))
+      },
+      deep: true
+    },
     markDate: {
       handler(val, oldVal) {
         this.getList(this.myDate)
@@ -224,13 +254,36 @@ export default {
 .wh_container {
   max-width: 410px;
   margin: auto;
+  position: relative;
 }
-
+/* .wh_container::before{
+  content: '';
+  border: 8px solid rgb(184, 183, 183);
+  border-color: transparent transparent red transparent;
+  position: absolute;
+  top: -15px;
+} */
 li {
   list-style-type: none;
 }
 .wh_top_changge {
   display: flex;
+  position: relative;
+}
+.wh_top_li_changge{
+  display: flex;
+  flex: 0.8;
+  margin-left: 50px;
+}
+.wh_gobackToday{
+  position: absolute;
+  font-size: 12px;
+  background: rgba(74, 146, 2, 0.719);
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 1%;
+  top: 25%;
+  left: 1.5%;
 }
 
 .wh_top_changge li {
@@ -238,7 +291,7 @@ li {
   display: flex;
   color: #000000;
   font-size: 18px;
-  flex: 1;
+  flex: 0.7;
   justify-content: center;
   align-items: center;
   height: 47px;
@@ -246,7 +299,8 @@ li {
 
 .wh_top_changge .wh_content_li {
   cursor: auto;
-  flex: 2.5;
+  flex: 2;
+  font-size: 16px
 }
 .wh_content_all {
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
@@ -255,6 +309,10 @@ li {
   width: 100%;
   overflow: hidden;
   padding-bottom: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  box-shadow: rgb(184, 183, 183) 0px 1px 3px 1px;
+  border-radius: 10px;
 }
 
 .wh_content {
@@ -322,12 +380,12 @@ wh_content_item_tag {
   border-right: 2px solid #000000;
   transform: rotate(45deg);
 }
-.wh_content_item > .wh_isMark {
+/* .wh_content_item > .wh_isMark {
   margin: auto;
   border-radius: 100px;
   background: blue;
   z-index: 2;
-}
+} */
 .wh_content_item .wh_other_dayhide {
   color: #bfbfbf;
 }
@@ -339,7 +397,10 @@ wh_content_item_tag {
   border-radius: 100px;
 }
 .wh_content_item .wh_chose_day {
-  background: bisque;
+  background: rgb(240, 166, 247);
   border-radius: 100px;
 }
+.fontColorRed{
+    color: red;
+  }
 </style>
