@@ -11,6 +11,7 @@
     @clear="onClear"
     @input="showTips"
     @cancel="onCancel"
+    @focus="onFocus"
   >
 
   <div v-if="!showCancelButton" slot="action" @click="onSearchAction">{{searchText}}</div>
@@ -24,6 +25,12 @@
     class="item"
     @click="chooseOne(item)">
     </div>
+  </div>
+  <div class="history" v-show="historyVisible">
+    <span
+    v-for="(item,index) in historyList"
+    :key="index"
+    @click="chooseOne(item)">{{item}}</span>
   </div>
 </div>
 </template>
@@ -86,6 +93,19 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    historyList: {
+      type: Array,
+      required: false,
+      default: () => []
+    }
+  },
+  watch: {
+    displayVisible: function() {
+      if (this.displayVisible) {
+        this.searchValue = ''
+        this.historyVisible = ''
+      }
     }
   },
   computed: {
@@ -109,7 +129,8 @@ export default {
   data() {
     return {
       list: [],
-      visible: false
+      visible: false,
+      historyVisible: false
     }
   },
   mounted() {
@@ -141,6 +162,7 @@ export default {
     }, 1000, true),
     // 输入内容后触发
     showTips: throttle(function(v) {
+      v === '' ? this.historyVisible = true : this.historyVisible = false
       console.log('showTips...........', v, v.trim())
       if ((v.trim())) this.initTipListOrEmit(v)
       else this.clearTipOrEmit()
@@ -184,6 +206,9 @@ export default {
       this.list = []
       this.visible = false
       !this.tipInterface && this.$emit('search', '')
+    },
+    onFocus() {
+      this.searchValue === '' && this.historyList.length !== 0 ? this.historyVisible = true : this.historyVisible = false
     }
   }
 
@@ -213,6 +238,26 @@ export default {
       text-indent: 16px;
       cursor: pointer;
     }
+  }
+  .history{
+    font-size: 14px;
+    color: #848383;
+    text-align: left;
+    border: 0.02667rem solid #bfbfbf;
+    border-radius: 0.13333rem;
+    margin: 0 0.26667rem;
+    height: 6.66667rem;
+    font-size: 0.37333rem;
+    padding: 10px;
+    span{
+      border: 1px solid #eee;
+      padding: 2px 5px;
+      margin: 5px;
+      &:hover{
+        background: burlywood
+      }
+    }
+
   }
 }
 </style>

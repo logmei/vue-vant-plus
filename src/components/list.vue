@@ -20,6 +20,7 @@
   class="search-class"
   :displayVisible.sync="visible"
   :tipInterface="searchListInterface"
+  :historyList="historyList"
   @search="searchFun"></Search>
 </div>
 
@@ -45,7 +46,8 @@ export default {
       searchListInterface: searchList,
       columns: cardLabel,
       visible: false,
-      searchValue: ''
+      searchValue: '',
+      historyList: ['中国', '英国', '大盘鸡']
     }
   },
   methods: {

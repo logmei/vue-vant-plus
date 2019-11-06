@@ -86,6 +86,7 @@ export default {
     border-radius: 5px;
     text-align: left;
     .card-tip{
+      line-height: 30px;
       .tip{
       font-size: 12px;
       background: #c3d6e6;

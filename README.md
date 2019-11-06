@@ -67,6 +67,7 @@ new Vue({
 | tipInterface | 查询接口 | Function | false | |
 | params | 查询接口需要的其他参数 | Object | false | |
 | displayVisible | 是否显示 | Boolean | false | false|
+| historyList | 历史记录 | Array | false | []
  #### 5、事件
   | 事件名 | 说明 | 参数 |
 |------|------------|------------|
