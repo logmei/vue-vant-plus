@@ -1,6 +1,7 @@
 <template>
   <div class="mainCalendar">
     <vlp-calendar
+    class="calendar"
     ref="Calendar"
     @choseDay="clickDay"
     @isToday="clickToday"
@@ -10,7 +11,9 @@
     :isShowCalendar="isShowCalendar"
     :operatorDate = "operatorDate"
     :markDateMore="markDate"
-    />
+    >
+    <vlp-button class="calBtn">确 定</vlp-button>
+    </vlp-calendar>
   </div>
 </template>
 
@@ -84,5 +87,20 @@ export default {
   position: absolute;
   background-color: rgb(255, 217, 0);
   bottom: 24%;
+}
+.mainCalendar >>> .wh_content_all{
+  padding-bottom: 80px;
+}
+.calendar{
+  position: relative;
+}
+.calBtn{
+  position: absolute;
+  bottom: 20px;
+  left:5%;
+  border-radius: 70px;
+  width: 90%;
+  background: #23C2B7;
+  color: #FFFFFF;
 }
 </style>

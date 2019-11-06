@@ -34,7 +34,7 @@ export default {
     text: {
       type: String,
       required: false,
-      default: ''
+      default: '111'
     },
     color: {
       type: String,
@@ -49,7 +49,7 @@ export default {
     tag: {
       type: String,
       required: false,
-      default: ''
+      default: 'button'
     }
 
   },
