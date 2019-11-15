@@ -1,27 +1,30 @@
 <template>
-<div>
+<div class="search-list-class">
   <van-sticky>
-<van-nav-bar
-  title="标题"
-  left-text="返回"
-  left-arrow
-
+    <van-nav-bar
+class="search-nav-bar-class"
 >
-  <van-icon name="search" slot="right" @click="searchPage"/>
+  <Search
+  slot="title"
+  v-model="searchValue"
+  class="search-class"
+  :tipInterface="searchListInterface"
+  :historyList="historyList"
+  :autoHidden="false"
+  :displayVisible = "true"
+  @search="searchFun"
+  @cancel="cancel"
+  @deleteHistory="deleteHistory"></Search>
 </van-nav-bar>
+
 </van-sticky>
 
   <List
   :interface-fun="searchList"
   :columns = "columns"
+  :parameter = "parameter"
   ></List>
-  <Search
-  v-model="searchValue"
-  class="search-class"
-  :displayVisible.sync="visible"
-  :tipInterface="searchListInterface"
-  :historyList="historyList"
-  @search="searchFun"></Search>
+
 </div>
 
 </template>
@@ -45,23 +48,38 @@ export default {
       searchList: searchListObj,
       searchListInterface: searchList,
       columns: cardLabel,
-      visible: false,
       searchValue: '',
-      historyList: ['中国啊手动阀手动阀', '英国埃里克事件的发生率', '大盘鸡', '埃里克点击发送']
+      historyList: ['中国啊手动阀手动阀', '英国埃里克事件的发生率', '大盘鸡', '埃里克点击发送'],
+      parameter: {}
     }
   },
   methods: {
     searchFun(v) {
+      this.parameter = { name: v }
       console.log('searchFun', v)
     },
-    searchPage() {
-      this.$router.push('/searchPage')
+    cancel() {
+      this.$router.go(-1)
+    },
+    deleteHistory() {
+      this.historyList = []
     }
   }
 }
 </script>
 <style lang="less" scoped>
-.search-class{
-  position: absolute;
+.search-list-class{
+  .search-nav-bar-class{
+    .van-nav-bar__title{
+      max-width:100%
+    }
+  }
+  .search-class{
+   position: absolute;
+  }
+  .van-pull-refresh__head{
+    height: 200px;
+  }
 }
+
 </style>

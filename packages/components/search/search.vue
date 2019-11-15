@@ -27,15 +27,19 @@
     </div>
   </div>
   <div class="history" v-show="historyVisible">
-    <span
+    <div class="history-top"><span>搜索历史</span><van-icon name="delete" @click="deleteHistory"/></div>
+    <div class="history-content">
+      <span
     v-for="(item,index) in historyList"
     :key="index"
     @click="chooseOne(item)">{{item}}</span>
+    </div>
+
   </div>
 </div>
 </template>
 <script>
-import { Search } from 'vant'
+import { Search, Icon } from 'vant'
 import { debounce, throttle } from '../../utils'
 /**
  * interface的response返回格式：
@@ -51,7 +55,8 @@ import { debounce, throttle } from '../../utils'
 export default {
   name: 'VlpSearch',
   components: {
-    [Search.name]: Search
+    [Search.name]: Search,
+    [Icon.name]: Icon
   },
   props: {
     value: {
@@ -98,13 +103,18 @@ export default {
       type: Array,
       required: false,
       default: () => []
+    },
+    autoHidden: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
   watch: {
     displayVisible: function() {
       if (this.displayVisible) {
         this.searchValue = ''
-        this.historyVisible = ''
+        this.historyVisible = true
       }
     }
   },
@@ -130,13 +140,17 @@ export default {
     return {
       list: [],
       visible: false,
-      historyVisible: false
+      historyVisible: true
     }
   },
   mounted() {
     this.initList()
   },
   methods: {
+    deleteHistory() {
+      this.$emit('deleteHistory')
+      this.historyVisible = false
+    },
     initList() {
       this.list = this.list.map(v => {
         v = v.replace(this.searchValue, `<span style="color:red">${this.searchValue}</span>`)
@@ -162,7 +176,7 @@ export default {
     }, 1000, true),
     // 输入内容后触发
     showTips: throttle(function(v) {
-      v === '' ? this.historyVisible = true : this.historyVisible = false
+      v === '' && this.historyList.length > 0 ? this.historyVisible = true : this.historyVisible = false
       console.log('showTips...........', v, v.trim())
       if ((v.trim())) this.initTipListOrEmit(v)
       else this.clearTipOrEmit()
@@ -171,7 +185,8 @@ export default {
     onCancel: debounce(function() {
       console.log('cancel............')
       this.clearTipOrEmit()
-      this.layoutVisible = false
+      this.$emit('cancel')
+      if (this.autoHidden) this.layoutVisible = false
     }, 1000, true),
     chooseOne(v) {
       const ele = document.createElement('span')
@@ -180,7 +195,8 @@ export default {
       this.$emit('search', ele.innerText)
       this.list = []
       this.visible = false
-      this.layoutVisible = false
+      this.historyVisible = false
+      if (this.autoHidden) this.layoutVisible = false
     },
     // 搜索提示
     showTipList(v) {
@@ -218,7 +234,7 @@ export default {
 .vlp-search{
     position: absolute;
     width: 100%;
-    height: 100%;
+    // height: 100%;
     background: #fff;
     top: 0;
     z-index: 1;
@@ -239,22 +255,48 @@ export default {
       cursor: pointer;
     }
   }
-  .history{
+  .van-search__action{
     font-size: 14px;
-    color: #848383;
+    color:#666666
+  }
+  .history{
+    color: #999999;
     text-align: left;
-    border: 0.02667rem solid #bfbfbf;
-    border-radius: 0.13333rem;
-    margin: 0 0.26667rem;
-    height: 6.66667rem;
-    font-size: 0.37333rem;
-    padding: 10px;
-    span{
-      border: 1px solid #eee;
-      padding: 2px 5px;
-      margin: 5px;
-      &:hover{
-        background: burlywood
+    font-size: 14px;
+    padding: 15px;
+    font-family: PingFangSC-Medium,PingFang SC;
+    border-radius: 0 0 5px 5px;
+    /* border-bottom: 1px solid #6666; */
+    box-shadow: 0 1px 1px #928e8e;
+    height: 200px;
+    overflow: auto;
+    .history-top{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+
+      span:first-child{
+        font-size: 16px;
+        font-weight: 500;
+        color: rgba(51,51,51,1);
+        line-height: 22px;
+      }
+      .van-icon{
+        font-size: 18px;
+      }
+    }
+    .history-content{
+      font-weight:400;
+      color:rgba(153,153,153,1);
+      line-height:20px;
+      span{
+        display: inline-block;
+        background: rgba(246,246,246,1);
+        border-radius: 16px;
+        padding: 6px 15px;
+        margin-bottom: 10px;
+        margin-right: 15px;
       }
     }
 

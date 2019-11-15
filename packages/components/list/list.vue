@@ -3,6 +3,7 @@
     :disabled="refreshDisabled"
     :pulling-text="pullingText"
     :loading-text="loadingText"
+    :head-height="headHeight"
     v-model="refreshing"
     @refresh="onRefresh()"
         >
@@ -89,6 +90,11 @@ export default {
       type: Object,
       required: false,
       default: () => {}
+    },
+    headHeight: {
+      type: Number,
+      required: false,
+      default: 200
     }
 
   },
