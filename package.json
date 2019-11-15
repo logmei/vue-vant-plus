@@ -1,6 +1,6 @@
 {
   "name": "vant-plus",
-  "version": "1.0.6",
+  "version": "1.0.11",
   "description": "H5移动端的公共组件",
   "main": "lib/vant-plus.umd.min.js",
   "keyword": "vue vant directive ",
