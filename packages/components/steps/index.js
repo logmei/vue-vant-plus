@@ -1,11 +1,12 @@
-import VlpSearch from './search.vue'
+import VlpSteps from './steps.vue'
 const install = Vue => {
   if (install.installed) return
   install.installed = true
-  Vue.component(VlpSearch.name, VlpSearch)
+  Vue.component(VlpSteps.name, VlpSteps)
 }
+
 if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue)
 }
-VlpSearch.install = install
-export default VlpSearch
+VlpSteps.install = install
+export default VlpSteps

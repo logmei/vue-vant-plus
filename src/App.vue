@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <router-link class="head" to="/list">列表</router-link>|
-    <router-link class="head" to="/calendar">calendar</router-link>
+    <router-link class="head" to="/calendar">calendar</router-link>|
+     <router-link class="head" to="/steps">steps</router-link>
     <router-view></router-view>
   </div>
 </template>

@@ -17,8 +17,8 @@ export function showTheTip(el, binding) {
 }
 // 删除提示信息
 export function deleteTheTip(el, binding) {
-  const tip = el.querySelector('span[name=fieldTip]')
-  el && el.removeChild(tip)
+  // const tip = el.querySelector('span[name=fieldTip]')
+  // el && el.removeChild(tip)
 }
 
 function createTitle(ele, title) {

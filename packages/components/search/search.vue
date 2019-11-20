@@ -114,7 +114,7 @@ export default {
     displayVisible: function() {
       if (this.displayVisible) {
         this.searchValue = ''
-        this.historyVisible = true
+        this.historyVisible = this.historyList.length > 0
       }
     }
   },
@@ -140,7 +140,7 @@ export default {
     return {
       list: [],
       visible: false,
-      historyVisible: true
+      historyVisible: false
     }
   },
   mounted() {

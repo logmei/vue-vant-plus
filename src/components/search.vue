@@ -49,7 +49,7 @@ export default {
       searchListInterface: searchList,
       columns: cardLabel,
       searchValue: '',
-      historyList: ['中国啊手动阀手动阀', '英国埃里克事件的发生率', '大盘鸡', '埃里克点击发送'],
+      historyList: [],
       parameter: {}
     }
   },

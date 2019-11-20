@@ -47,7 +47,7 @@ export default {
       columns: cardLabel,
       visible: false,
       searchValue: '',
-      historyList: ['中国啊手动阀手动阀', '英国埃里克事件的发生率', '大盘鸡', '埃里克点击发送']
+      historyList: []
     }
   },
   methods: {
