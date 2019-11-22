@@ -103,7 +103,8 @@ export default {
   }
 }
 ```
- ### 搜索组件：vlp-list
+ ### 列表组件：vlp-list
+ > 支持下拉刷新，上拉加载，传入接口可以自动查询，list子项中留有插槽，可以设置自定义cart显示list中的内容
  #### 1、引入指令
   ```
   import {VlpList} from 'vant-plus'
@@ -133,23 +134,32 @@ export default {
 | direction | 滚动触发加载的方向，可选值为up | String | false | 'down' |
 | refreshDisabled | 禁用刷新 | Boolean | false | false |
 | pullingText | 下拉过程文案 | String | false | |
-
- #### 5、使用示例
+#### 5、插槽slot
+| 参数 | 说明 |
+|------|------------|------------|----------|----|
+| list  | 通过接口查询返回的结果 |
+ #### 6、使用示例
 
 ```html
-<vlp-list
-  :interface-fun="listInterface"
+ <vlp-list
+  :interface-fun="searchList"
   :columns = "columns"
-  :parameter="parameter"
+  :parameter = "parameter"
   >
+   <template v-slot="list">
+      <Card v-for="(item,index) in list" :key="index" :card-data="item" :label-columns='columns'>
+      </Card>
+    </template>
   </vlp-list>
 ```
 ```js
 import {  VlpList } from 'vant-plus'
 import LabelColumns from 'columns'
+import Card from '../components/card'
 export default {
   components: {
-    VlpList
+    VlpList,
+    Card
   },
   data() {
     return {
@@ -167,7 +177,7 @@ export default {
   }
 }
 ```
-#### 6、对应字段格式
+#### 7、对应字段格式
  
   | 参数 | 说明 | 类型 | 是否必填| 默认值|
 |------|------------|------------|----------|----|
@@ -195,13 +205,13 @@ const cardLabel = [
   { alias: 'buttons',
     list: [
       { label: '去预约',
-        callback: (context) => {
-          context.push({ path: '/HelloWorld', params: { id: 123 }})
+        callback: function(params){
+          this.$router.push({ path: '/HelloWorld', params: params})
         }
       },
       { label: '重新派单',
-        callback: (context) => {
-          context.push({ path: '/HelloWorld', params: { id: 555 }})
+        callback: function(params) {
+          this.$router.push({ path: '/HelloWorld', params: params})
         }
       }
     ] }
@@ -485,3 +495,113 @@ export default {
   }
 }
 ```
+
+### 步骤组件：vlp-steps
+ #### 1、引入指令
+  ```
+  import {VlpSteps} from 'vant-plus'
+  ```
+
+   #### 2、局部注册
+  ```
+  components: {
+      VlpSteps
+    }
+  ```
+   #### 3、全局注册
+  ```
+  Vue.use(VlpSteps)
+  ``` 
+  #### 4、属性
+  | 参数 | 说明 | 类型 | 是否必填| 默认值|
+|------|------------|------------|----------|----|
+| data  | 显示数据  | Object | true | |
+| end  | 是否最后一个节点  | Boolean | false | false |
+#### 5、data属性说明
+  | 参数 | 说明 | 类型 | 是否必填| 默认值|
+|------|------------|------------|----------|----|
+| title  | 主标题  | String | true | |
+| status  | 当前状态（wait,pass,warning）,也可以自定义style样式来设置状态样式  | String | false | wait |
+| icon  | 图标名称  | String | false | 'warning'默认使用vant-icon中的名字 |
+| style  | 设置样式  | Object | false | |
+* style中可以设置line和icon的样式如：
+```js
+  style: {
+      icon: {
+        color: '#F77200',
+        fontSize:'18px'
+      },
+      line: {
+        background:'#23C2B7'
+      }
+  }
+```
+ #### 6、使用示例
+ ```html
+    <vlp-steps :data="item" :end="data.length===(index+1)" v-for="(item,index) in data" :key="index">
+      <div class="title">{{item.title}} <span style="color:#23C2B7">{{item.title | filterTitle}}</span></div>
+      <div class="detail" v-for="(d,index) in item.list" :key="index">{{d}}</div>
+    </vlp-steps>
+ ```
+ ```js
+
+import {  VlpSteps } from 'vant-plus'
+ export default {
+  name: 'VlpSteps',
+  components: {
+    VlpSteps
+  },
+   data() {
+    return {
+      data: [{
+        title: '标题1',
+        status: 'warning',
+        style: {
+          icon: {
+            color: '#F77200',
+            fontSize: '18px'
+          },
+          line: {
+            background: '#23C2B7'
+          }
+        },
+        list: [
+          '告警',
+          '2019-03-12 22:12'
+        ]
+      },
+      {
+        title: '标题2',
+        status: 'pass',
+        icon: 'checked',
+        style: {
+          icon: {
+            color: '#23C2B7'
+          }
+        },
+        list: [
+          '审核通过',
+          '2019-03-15 22:12'
+        ]
+      },
+      {
+        title: '标题3',
+        checked: 'wait',
+        icon: 'warning',
+        list: [
+          '等待审核',
+          '二级审核通过',
+          '2019-03-19 22:12'
+        ]
+      }
+      ]
+    }
+  },
+  filters: {
+    filterTitle: function(v) {
+      return v === '标题1' ? '副标题' : ''
+    }
+  }
+}
+ }
+ ```

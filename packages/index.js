@@ -8,6 +8,7 @@ import VlpCalendar from './components/calendar'
 import VlpSearch from './components/search'
 import VlpList from './components/list'
 import VlpDetail from './components/detail'
+import VlpSteps from './components/steps'
 // 自定义指令
 const directives = {
   Line,
@@ -19,7 +20,8 @@ const components = {
   VlpCalendar,
   VlpSearch,
   VlpList,
-  VlpDetail
+  VlpDetail,
+  VlpSteps
 }
 
 const install = Vue => {
@@ -47,5 +49,6 @@ export {
   VlpSearch,
   VlpList,
   VlpDetail,
+  VlpSteps,
   handleListInfo
 }
