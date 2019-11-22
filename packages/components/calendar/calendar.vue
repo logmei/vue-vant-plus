@@ -294,13 +294,16 @@ li {
 }
 .wh_gobackToday{
   position: absolute;
-  font-size: 12px;
-  background: white;
+  font-size:13px;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+  background:rgba(255,255,255,1);
   border: 1px solid #D3D3D3;
-  border-radius: 6px;
+  border-radius: 4px;
   padding: 1% 2%;
   top: 25%;
-  left: 1.5%;
+  left: 3%;
 }
 
 .wh_top_changge li {
