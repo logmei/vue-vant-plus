@@ -289,8 +289,8 @@ li {
 }
 .wh_top_li_changge{
   display: flex;
-  flex: 0.8;
-  margin-left: 50px;
+  flex: 0.65;
+  margin-left: 25%;
 }
 .wh_gobackToday{
   position: absolute;
@@ -308,7 +308,7 @@ li {
   display: flex;
   color: #000000;
   font-size: 18px;
-  flex: 0.7;
+  flex: 0.2;
   justify-content: center;
   align-items: center;
   height: 47px;
@@ -378,8 +378,8 @@ wh_content_item_tag {
 }
 
 .wh_jiantou1 {
-  width: 12px;
-  height: 12px;
+  width: 6px;
+  height: 6px;
   border-top: 2px solid #000000;
   border-left: 2px solid #000000;
   transform: rotate(-45deg);
@@ -391,8 +391,8 @@ wh_content_item_tag {
 }
 
 .wh_jiantou2 {
-  width: 12px;
-  height: 12px;
+  width: 6px;
+  height: 6px;
   border-top: 2px solid #000000;
   border-right: 2px solid #000000;
   transform: rotate(45deg);
@@ -404,10 +404,10 @@ wh_content_item_tag {
   z-index: 2;
 } */
 .wh_content_item .wh_other_dayhide {
-  color: #bfbfbf;
+  color: #DBDBDB;
 }
 .wh_content_item .wh_want_dayhide {
-  color: #bfbfbf;
+  color: #DBDBDB;
 }
 .wh_content_item .wh_isToday {
   background: #eeeeee;

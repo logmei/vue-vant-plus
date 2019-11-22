@@ -482,12 +482,25 @@ export default {
   components: {
     VlpCalendar
   },
+  // 时间转10位时间戳
+  created() {
+    this.limitDate = Math.round((new Date().getTime() - (24 * 60 * 60 * 1000)) / 1000).toString()
+  },
   methods: {
+    // 调接口获取有待办事项的数据   下期再加mark1
+    // getQuery() {
+    //   this.markDate = [{ date: '2019/11/01', className: 'mark1' }, { date: '2019/10/29', className: 'mark1' }]
+    // },
     clickToday(v) {
-      
+      this.todayDate = v
     },
     clickDay(v) {
-      
+      if (v.calendarDate !== this.todayDate) {
+        this.isShowBtn = true
+      } else {
+        this.isShowBtn = false
+      }
+      this.chDate = v.calendarDate
     },
     changeDate(v) {
 

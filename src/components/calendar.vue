@@ -6,6 +6,7 @@
     @choseDay="clickDay"
     @isToday="clickToday"
     @changeMonth="changeDate"
+    :isWeek="true"
     :agoDayHide="limitDate"
     :isShowBtn="isShowBtn"
     :isShowCalendar="isShowCalendar"
@@ -27,7 +28,7 @@ export default {
       limitDate: '',
       todayDate: '',
       markDate: [],
-      isShowBtn: false,
+      isShowBtn: true,
       chDate: '',
       isShowCalendar: true,
       operatorDate: ''
