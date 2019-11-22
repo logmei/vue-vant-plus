@@ -62,8 +62,8 @@ export default {
       default: '回今天'
     },
     operatorDate: {
-      type: Array,
-      default: () => []
+      type: String,
+      default: ''
     },
     isShowCalendar: {
       type: Boolean,
@@ -126,6 +126,8 @@ export default {
       }
     },
     ChoseMonth: function(date, isChosedDay = true) {
+      console.log('jinlaile')
+
       date = timeUtil.dateFormat(date)
       this.myDate = new Date(date)
       this.$emit('changeMonth', timeUtil.dateFormat(this.myDate))
@@ -214,9 +216,10 @@ export default {
   watch: {
     operatorDate: {
       handler(val, oldVal) {
-        this.ChoseMonth(new Date(val[0]))
+        this.ChoseMonth(new Date(val))
       },
-      deep: true
+      deep: true,
+      immediate: true
     },
     markDate: {
       handler(val, oldVal) {

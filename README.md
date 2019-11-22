@@ -439,7 +439,7 @@ export default {
 | isShowBtn  | 左上角是否显示'回今天'按钮 | Boolean| false | false |
 | todayBack | 可传入按钮显示值，只有isShowBtn为true时支持| String| false|'回今天'
 | isShowCalendar  | 控制日历的显示和隐藏  | Boolean | false | false |
-| operatorDate  | 入口，可以自定义某个日期，只支持数组第一项 | Array| false | [] |
+| operatorDate  | 入口，可以自定义某个日期，只支持一个日期，格式为'2019-11-24' | String| false | '' |
 | markDateMore  | 如果需要某月的几天被标注，传当月的日期数组。如["2018/2/2","2018/2/6"]被会标注（相同的标记） | Array | false | |
 | markDate | arr=['2018/4/1','2018/4/3'] 标记4月1日和4月3日 简单标记    | Array| false |  |
    #### 5、事件

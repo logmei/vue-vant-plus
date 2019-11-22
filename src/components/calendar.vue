@@ -9,7 +9,7 @@
     :agoDayHide="limitDate"
     :isShowBtn="isShowBtn"
     :isShowCalendar="isShowCalendar"
-    :operatorDate = "operatorDate"
+    :operatorDate = operatorDate
     :markDateMore="markDate"
     >
     <vlp-button class="calBtn">确 定</vlp-button>
@@ -27,10 +27,10 @@ export default {
       limitDate: '',
       todayDate: '',
       markDate: [],
-      isShowBtn: true,
+      isShowBtn: false,
       chDate: '',
       isShowCalendar: true,
-      operatorDate: []
+      operatorDate: ''
     }
   },
   // 时间转10位时间戳
