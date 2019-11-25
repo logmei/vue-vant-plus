@@ -7,7 +7,7 @@
     </div>
     <div class="icon">
       <slot name='icon'>
-        <van-icon :name="data.icon?data.icon:'warning'"  :style="iconStyle"/>
+        <van-icon :name="icon"  :style="iconStyle"/>
       </slot>
 
     </div>
@@ -57,6 +57,19 @@ export default {
       }
       if (this.data.style && this.data.style.icon)style = { ...style, ...this.data.style.icon }
       return style
+    },
+    icon: function() {
+      if (this.data.icon) return this.data.icon
+      switch (this.data.status) {
+        case 'wait':
+          return 'more'
+        case 'pass':
+          return 'checked'
+        case 'warning':
+          return 'warning'
+        default:
+          return 'more'
+      }
     }
   }
 
@@ -78,6 +91,7 @@ export default {
     z-index: 10;
     .van-icon{
       font-size: 20px;
+      background: #ffffff;
     }
   }
   .line{

@@ -48,7 +48,6 @@ export default {
       {
         title: '标题3',
         checked: 'wait',
-        icon: 'warning',
         list: [
           '等待审核',
           '二级审核通过',

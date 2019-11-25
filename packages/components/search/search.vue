@@ -99,6 +99,11 @@ export default {
       required: false,
       default: false
     },
+    autoShowHistory: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
     historyList: {
       type: Array,
       required: false,
@@ -140,7 +145,7 @@ export default {
     return {
       list: [],
       visible: false,
-      historyVisible: false
+      historyVisible: this.autoShowHistory && this.historyList.length > 0
     }
   },
   mounted() {
@@ -176,7 +181,7 @@ export default {
     }, 1000, true),
     // 输入内容后触发
     showTips: throttle(function(v) {
-      v === '' && this.historyList.length > 0 ? this.historyVisible = true : this.historyVisible = false
+      v === '' && !this.autoShowHistory && this.historyList.length > 0 ? this.historyVisible = true : this.historyVisible = false
       console.log('showTips...........', v, v.trim())
       if ((v.trim())) this.initTipListOrEmit(v)
       else this.clearTipOrEmit()
@@ -224,29 +229,35 @@ export default {
       !this.tipInterface && this.$emit('search', '')
     },
     onFocus() {
-      this.searchValue === '' && this.historyList.length !== 0 ? this.historyVisible = true : this.historyVisible = false
+      !this.autoShowHistory && this.searchValue === '' && this.historyList.length !== 0 ? this.historyVisible = true : this.historyVisible = false
     }
   }
 
 }
 </script>
-<style lang="less" scoped>
-.vlp-search{
+<style lang="less">
+.vlp-search /deep/{
     position: absolute;
     width: 100%;
     // height: 100%;
     background: #fff;
     top: 0;
     z-index: 1;
+    .van-search__content{
+      .van-icon-search,.van-field__control,.van-icon-clear{
+        color: #999999
+      }
+    }
+
   .list{
-    border: 1px solid #bfbfbf;
+    // border: 1px solid #bfbfbf;
     border-radius: 5px;
     margin: 0 10px;
-    height: 250px;
+    // height: 250px;
     font-size: 14px;
     .item{
       border-bottom: 1px solid #eeeeee;
-      margin-top: 10px;
+      // margin-top: 10px;
       width: 95%;
       margin-left: auto;
       margin-right: auto;
@@ -267,9 +278,9 @@ export default {
     font-family: PingFangSC-Medium,PingFang SC;
     border-radius: 0 0 5px 5px;
     /* border-bottom: 1px solid #6666; */
-    box-shadow: 0 1px 1px #928e8e;
-    height: 200px;
-    overflow: auto;
+    // box-shadow: 0 1px 1px #928e8e;
+    // height: 200px;
+    // overflow: auto;
     .history-top{
       display: flex;
       align-items: center;
@@ -284,6 +295,7 @@ export default {
       }
       .van-icon{
         font-size: 18px;
+        color: #999999
       }
     }
     .history-content{

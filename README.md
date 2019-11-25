@@ -68,6 +68,8 @@ new Vue({
 | params | 查询接口需要的其他参数 | Object | false | |
 | displayVisible | 是否显示 | Boolean | false | false|
 | historyList | 历史记录 | Array | false | []
+| autoShowHistory | 是否默认显示历史记录 | Boolean | false | false
+| autoHidden | 是否自动隐藏该搜索框 | Boolean | false | true
  #### 5、事件
   | 事件名 | 说明 | 参数 |
 |------|------------|------------|
@@ -79,8 +81,14 @@ new Vue({
    class="search-class"
    v-model="searchValue"
    :tipInterface="searchListInterface"
-   :displayVisible.sync="visible"
-   @search="searchFun">
+   placeholder="搜索名称"
+  :historyList="historyList"
+  :autoHidden="false"
+  :displayVisible = "true"
+  :autoShowHistory="true"
+  @search="searchFun"
+  @cancel="cancel"
+  @deleteHistory="deleteHistory">
    </vlp-search>
 ```
 ```js
@@ -93,18 +101,27 @@ export default {
     return {
       searchListInterface: searchList,
       searchValue: '',
-      visible: false
+      visible: false,
+      historyList: ['中国', '阿斯利康大家发生的'],
     }
   },
   methods: {
-    searchFun(v) {
-      console.log('searchFun...', v)
+   searchFun(v) {
+      this.parameter = { name: v }
+      console.log('searchFun', v)
+    },
+    cancel() {
+      this.$router.go(-1)
+    },
+    deleteHistory() {
+      this.historyList = []
     }
   }
 }
 ```
  ### 列表组件：vlp-list
- > 支持下拉刷新，上拉加载，传入接口可以自动查询，list子项中留有插槽，可以设置自定义cart显示list中的内容
+ > 支持下拉刷新，上拉加载，传入接口可以自动查询，list子项中留有插槽，可以设置自定义cart显示list中的内容.
+ > 不可自动加载数据时外部参数没有内容将不查询
  #### 1、引入指令
   ```
   import {VlpList} from 'vant-plus'
@@ -134,6 +151,19 @@ export default {
 | direction | 滚动触发加载的方向，可选值为up | String | false | 'down' |
 | refreshDisabled | 禁用刷新 | Boolean | false | false |
 | pullingText | 下拉过程文案 | String | false | |
+| autoLoad | 自动加载 | Boolean | false | false |
+* interfaceFun接口返回的数据格式
+{
+  code:0//返回码
+  msg:''//返回的信息
+  result:{//返回的结果
+    pageNum:1,//当前页
+    total:10,//总条数
+    list:[],//列表数据
+    pages:1//共几页
+  }
+}
+* 搜索时，建议设置：autoLoad=false
 #### 5、插槽slot
 | 参数 | 说明 |
 |------|------------|------------|----------|----|
@@ -450,8 +480,8 @@ export default {
 | todayBack | 可传入按钮显示值，只有isShowBtn为true时支持| String| false|'回今天'
 | isShowCalendar  | 控制日历的显示和隐藏  | Boolean | false | false |
 | operatorDate  | 入口，可以自定义某个日期，只支持数组第一项 | Array| false | [] |
-| markDateMore  | 如果需要某月的几天被标注，传当月的日期数组。如["2018/2/2","2018/2/6"]被会标注（相同的标记） | Array | false | |
-| markDate | arr=['2018/4/1','2018/4/3'] 标记4月1日和4月3日 简单标记    | Array| false |  |
+| markDateMore  | 如果需要某月的几天被标注，传当月的日期数组。如["2018-02-02","2018-02-06"]被会标注（相同的标记） | Array | false | |
+| markDate | arr=['2018-04-01','2018-04-03'] 标记4月1日和4月3日 简单标记    | Array| false |  |
    #### 5、事件
   | 参数 | 说明 | 类型 |
 |------|------------|------------|----------|----|

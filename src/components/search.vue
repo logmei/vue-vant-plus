@@ -9,9 +9,11 @@ class="search-nav-bar-class"
   v-model="searchValue"
   class="search-class"
   :tipInterface="searchListInterface"
+  placeholder="搜索名称"
   :historyList="historyList"
   :autoHidden="false"
   :displayVisible = "true"
+  :autoShowHistory="true"
   @search="searchFun"
   @cancel="cancel"
   @deleteHistory="deleteHistory"></Search>
@@ -23,6 +25,7 @@ class="search-nav-bar-class"
   :interface-fun="searchList"
   :columns = "columns"
   :parameter = "parameter"
+  :autoLoad="false"
   ></List>
 
 </div>
@@ -49,7 +52,7 @@ export default {
       searchListInterface: searchList,
       columns: cardLabel,
       searchValue: '',
-      historyList: [],
+      historyList: ['中国', '阿斯利康大家发生的'],
       parameter: {}
     }
   },

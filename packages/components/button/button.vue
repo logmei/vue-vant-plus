@@ -6,6 +6,11 @@
    :color="color"
    :icon="icon"
    :tag="tag"
+   :disabled="disabled"
+   :loading="loading"
+   :loading-text="loadingText"
+   :loading-type="loadingType"
+   :loading-size="loadingSize"
    @click="handleClick"
    @touchstart="handleTouchstart"
    >
@@ -34,7 +39,7 @@ export default {
     text: {
       type: String,
       required: false,
-      default: '111'
+      default: ''
     },
     color: {
       type: String,
@@ -50,6 +55,31 @@ export default {
       type: String,
       required: false,
       default: 'button'
+    },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    loadingText: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    loadingType: {
+      type: String,
+      required: false,
+      default: 'circular'
+    },
+    loadingSize: {
+      type: String,
+      required: false,
+      default: '20px'
     }
 
   },

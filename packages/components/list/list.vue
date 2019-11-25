@@ -95,6 +95,11 @@ export default {
       type: Number,
       required: false,
       default: 200
+    },
+    autoLoad: {
+      type: Boolean,
+      required: false,
+      default: true
     }
 
   },
@@ -126,7 +131,7 @@ export default {
     Card
   },
   mounted() {
-    this.onLoad()
+    this.autoLoad && this.onLoad()
   },
 
   methods: {
@@ -140,6 +145,8 @@ export default {
     },
     onLoad(isRefresh) {
       if (this.refreshDisabled) return
+      // 不可自动加载数据时外部参数没有内容将不查询
+      if (!this.autoLoad && Object.keys(this.parameter).length === 0) return
       const pagenum = this.pageNum + 1
       // if (pagenum > this.total) return
       const params = { pageNum: pagenum, pageSize: this.pageSize, ...this.parameter }
