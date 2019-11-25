@@ -479,9 +479,9 @@ export default {
 | isShowBtn  | 左上角是否显示'回今天'按钮 | Boolean| false | false |
 | todayBack | 可传入按钮显示值，只有isShowBtn为true时支持| String| false|'回今天'
 | isShowCalendar  | 控制日历的显示和隐藏  | Boolean | false | false |
-| operatorDate  | 入口，可以自定义某个日期，只支持数组第一项 | Array| false | [] |
-| markDateMore  | 如果需要某月的几天被标注，传当月的日期数组。如["2018-02-02","2018-02-06"]被会标注（相同的标记） | Array | false | |
-| markDate | arr=['2018-04-01','2018-04-03'] 标记4月1日和4月3日 简单标记    | Array| false |  |
+| operatorDate  | 入口，可以自定义某个日期，只支持一个日期，格式为'2019-11-24' | String| false | '' |
+| markDateMore  | 如果需要某月的几天被标注，传当月的日期数组。如["2018/2/2","2018/2/6"]被会标注（相同的标记） | Array | false | |
+| markDate | arr=['2018/4/1','2018/4/3'] 标记4月1日和4月3日 简单标记    | Array| false |  |
    #### 5、事件
   | 参数 | 说明 | 类型 |
 |------|------------|------------|----------|----|
@@ -512,12 +512,25 @@ export default {
   components: {
     VlpCalendar
   },
+  // 时间转10位时间戳
+  created() {
+    this.limitDate = Math.round((new Date().getTime() - (24 * 60 * 60 * 1000)) / 1000).toString()
+  },
   methods: {
+    // 调接口获取有待办事项的数据   下期再加mark1
+    // getQuery() {
+    //   this.markDate = [{ date: '2019/11/01', className: 'mark1' }, { date: '2019/10/29', className: 'mark1' }]
+    // },
     clickToday(v) {
-      
+      this.todayDate = v
     },
     clickDay(v) {
-      
+      if (v.calendarDate !== this.todayDate) {
+        this.isShowBtn = true
+      } else {
+        this.isShowBtn = false
+      }
+      this.chDate = v.calendarDate
     },
     changeDate(v) {
 

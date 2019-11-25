@@ -62,8 +62,8 @@ export default {
       default: '回今天'
     },
     operatorDate: {
-      type: Array,
-      default: () => []
+      type: String,
+      default: ''
     },
     isShowCalendar: {
       type: Boolean,
@@ -126,6 +126,8 @@ export default {
       }
     },
     ChoseMonth: function(date, isChosedDay = true) {
+      console.log('jinlaile')
+
       date = timeUtil.dateFormat(date)
       this.myDate = new Date(date)
       this.$emit('changeMonth', timeUtil.dateFormat(this.myDate))
@@ -214,9 +216,10 @@ export default {
   watch: {
     operatorDate: {
       handler(val, oldVal) {
-        this.ChoseMonth(new Date(val[0]))
+        this.ChoseMonth(new Date(val))
       },
-      deep: true
+      deep: true,
+      immediate: true
     },
     markDate: {
       handler(val, oldVal) {
@@ -286,18 +289,21 @@ li {
 }
 .wh_top_li_changge{
   display: flex;
-  flex: 0.8;
-  margin-left: 50px;
+  flex: 0.65;
+  margin-left: 25%;
 }
 .wh_gobackToday{
   position: absolute;
-  font-size: 12px;
-  background: white;
+  font-size:13px;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+  background:rgba(255,255,255,1);
   border: 1px solid #D3D3D3;
-  border-radius: 6px;
+  border-radius: 4px;
   padding: 1% 2%;
   top: 25%;
-  left: 1.5%;
+  left: 3%;
 }
 
 .wh_top_changge li {
@@ -305,7 +311,7 @@ li {
   display: flex;
   color: #000000;
   font-size: 18px;
-  flex: 0.7;
+  flex: 0.2;
   justify-content: center;
   align-items: center;
   height: 47px;
@@ -375,8 +381,8 @@ wh_content_item_tag {
 }
 
 .wh_jiantou1 {
-  width: 12px;
-  height: 12px;
+  width: 6px;
+  height: 6px;
   border-top: 2px solid #000000;
   border-left: 2px solid #000000;
   transform: rotate(-45deg);
@@ -388,8 +394,8 @@ wh_content_item_tag {
 }
 
 .wh_jiantou2 {
-  width: 12px;
-  height: 12px;
+  width: 6px;
+  height: 6px;
   border-top: 2px solid #000000;
   border-right: 2px solid #000000;
   transform: rotate(45deg);
@@ -401,10 +407,10 @@ wh_content_item_tag {
   z-index: 2;
 } */
 .wh_content_item .wh_other_dayhide {
-  color: #bfbfbf;
+  color: #DBDBDB;
 }
 .wh_content_item .wh_want_dayhide {
-  color: #bfbfbf;
+  color: #DBDBDB;
 }
 .wh_content_item .wh_isToday {
   background: #eeeeee;
