@@ -152,6 +152,7 @@ export default {
 | refreshDisabled | 禁用刷新 | Boolean | false | false |
 | pullingText | 下拉过程文案 | String | false | |
 | autoLoad | 自动加载 | Boolean | false | false |
+| load | 触发list重新加载数据(true:重新加载，false:不重新加载) | Boolean | false | false |
 * interfaceFun接口返回的数据格式
 {
   code:0//返回码

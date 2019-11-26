@@ -100,6 +100,11 @@ export default {
       type: Boolean,
       required: false,
       default: true
+    },
+    load: {
+      type: Boolean,
+      required: false,
+      default: false
     }
 
   },
@@ -116,12 +121,22 @@ export default {
   },
   watch: {
     parameter: function() {
+      this.pageNum = 0
       this.onLoad()
     }
   },
   computed: {
     finishedMsg: function() {
       return this.finishedText || `共找到${this.total}条记录,已无更多`
+    },
+    listLoad: {
+      set(v) {
+        v && this.onLoad()
+        this.$emit('update:load', v)
+      },
+      get() {
+        return this.load
+      }
     }
   },
   components: {
@@ -151,6 +166,7 @@ export default {
       // if (pagenum > this.total) return
       const params = { pageNum: pagenum, pageSize: this.pageSize, ...this.parameter }
       this.interfaceFun(params).then(response => {
+        this.listLoad = false
         const result = response.result
         this.pageNum = result.pageNum
         this.total = result.total
@@ -159,6 +175,7 @@ export default {
         this.loading = false
         // 若最后一页将设置完成不再触发加载
         console.log('page...', pagenum, result.pages)
+        this.$emit('loaded', { total: result.total, pages: result.pages })
         // this.finished = true
         if (pagenum === result.pages) this.finished = true
       })
