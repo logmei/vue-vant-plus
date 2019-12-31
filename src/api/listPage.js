@@ -15,6 +15,18 @@ export function searchList(params) {
     })
   })
 }
+// 获取菜单列表上的总数
+export function getMenuListTotal() {
+  return new Promise(resolve => {
+    resolve({
+      code: 0,
+      msg: '',
+      result: [
+        10, 5, 3, 0, 12, 33, 15, 40
+      ]
+    })
+  })
+}
 
 export function searchListObj(params) {
   console.log('searchListObj', params)

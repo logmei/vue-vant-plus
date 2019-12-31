@@ -60,16 +60,16 @@ export default {
   watch: {
     cardData: function() {
       this.data = InitCardInfo(this.labelColumns, this.cardData)
-      console.log('watch cardData...', this.data)
+      // console.log('watch cardData...', this.data)
     }
   },
   beforeMount() {
     this.data = InitCardInfo(this.labelColumns, this.cardData)
-    console.log('beforeMount cardData...', this.data)
+    // console.log('beforeMount cardData...', this.data)
   },
   methods: {
     buttonClick(obj) {
-      console.log('buttonClick...')
+      // console.log('buttonClick...')
       this.$router.push({ path: '/HelloWorld', params: { id: 123 }})
       // obj.callback && obj.callback(this)
     }

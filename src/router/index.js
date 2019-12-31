@@ -8,7 +8,8 @@ const routes = [
   { path: '/list', component: () => import('../components/list.vue') },
   { path: '/searchPage', component: () => import('../components/search.vue') },
   { path: '/steps', component: () => import('../components/steps.vue') },
-  { path: '/button', component: () => import('../components/button.vue') }
+  { path: '/button', component: () => import('../components/button.vue') },
+  { path: '/touch', component: () => import('../components/touch.vue') }
 ]
 
 const router = new VueRouter({

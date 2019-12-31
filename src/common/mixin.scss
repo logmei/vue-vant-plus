@@ -1,0 +1,17 @@
+@mixin TabStyle {
+  .van-tab{
+    color: #666666;
+    max-width: 76px;
+ }
+ .van-tab--active{
+   color: #23C2B7
+ }
+ .van-tabs__line{
+    width: 20px !important;
+    background: rgba(35,194,183,1);
+    border-radius: 3px !important;
+ }
+ .van-hairline--top-bottom:after, .van-hairline-unset--top-bottom:after{
+   border-width:0
+ }
+}

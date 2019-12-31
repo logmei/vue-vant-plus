@@ -9,6 +9,7 @@ import VlpSearch from './components/search'
 import VlpList from './components/list'
 import VlpDetail from './components/detail'
 import VlpSteps from './components/steps'
+import VlpTouch from './components/touch'
 // 自定义指令
 const directives = {
   Line,
@@ -21,7 +22,8 @@ const components = {
   VlpSearch,
   VlpList,
   VlpDetail,
-  VlpSteps
+  VlpSteps,
+  VlpTouch
 }
 
 const install = Vue => {
@@ -50,5 +52,6 @@ export {
   VlpList,
   VlpDetail,
   VlpSteps,
+  VlpTouch,
   handleListInfo
 }

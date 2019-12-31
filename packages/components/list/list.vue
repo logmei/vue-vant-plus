@@ -112,7 +112,7 @@ export default {
     return {
       list: [],
       total: 0, // 总条数
-      pageNum: 0, // 当前页
+      pageNum: 1, // 当前页
       loading: false,
       finished: false,
       refreshing: false,
@@ -121,7 +121,7 @@ export default {
   },
   watch: {
     parameter: function() {
-      this.pageNum = 0
+      this.pageNum = 1
       this.onLoad()
     }
   },
@@ -131,7 +131,10 @@ export default {
     },
     listLoad: {
       set(v) {
-        v && this.onLoad()
+        if (v) {
+          this.pageNum = 1
+          this.onLoad()
+        }
         this.$emit('update:load', v)
       },
       get() {
@@ -162,22 +165,26 @@ export default {
       if (this.refreshDisabled) return
       // 不可自动加载数据时外部参数没有内容将不查询
       if (!this.autoLoad && Object.keys(this.parameter).length === 0) return
-      const pagenum = this.pageNum + 1
+      // const pagenum = this.pageNum + 1
       // if (pagenum > this.total) return
-      const params = { pageNum: pagenum, pageSize: this.pageSize, ...this.parameter }
+      const params = { pageNum: this.pageNum, pageSize: this.pageSize, ...this.parameter }
       this.interfaceFun(params).then(response => {
         this.listLoad = false
         const result = response.result
-        this.pageNum = result.pageNum
         this.total = result.total
         this.list.push(...result.list)
         // 加载状态结束
         this.loading = false
         // 若最后一页将设置完成不再触发加载
-        console.log('page...', pagenum, result.pages)
+        console.log('list...', this.list)
         this.$emit('loaded', { total: result.total, pages: result.pages })
         // this.finished = true
-        if (pagenum === result.pages) this.finished = true
+        if (result.pageNum === result.pages) {
+          this.finished = true
+          this.pageNum = result.pageNum
+        } else {
+          this.pageNum = result.pageNum + 1
+        }
       })
     }
 

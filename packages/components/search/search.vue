@@ -302,6 +302,7 @@ export default {
       font-weight:400;
       color:rgba(153,153,153,1);
       line-height:20px;
+      white-space: normal;
       span{
         display: inline-block;
         background: rgba(246,246,246,1);

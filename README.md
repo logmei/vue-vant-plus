@@ -396,7 +396,7 @@ export function ListObj(params) {
   },
   beforeMount() {
     this.data = handleListInfo(LabelColumns, cardData)
-    console.log('beforeMount cardData...', this.data)
+    // console.log('beforeMount cardData...', this.data)
   }
 
 }
@@ -647,5 +647,84 @@ import {  VlpSteps } from 'vant-plus'
     }
   }
 }
+ }
+ ```
+
+### 步骤组件：vlp-touch
+> 上下滑动触发加载
+ #### 1、引入指令
+  ```
+  import {VlpTouch} from 'vant-plus'
+  ```
+
+   #### 2、局部注册
+  ```
+  components: {
+      VlpTouch
+    }
+  ```
+   #### 3、全局注册
+  ```
+  Vue.use(VlpTouch)
+  ``` 
+  #### 4、属性
+  | 参数 | 说明 | 类型 | 是否必填| 默认值|
+|------|------------|------------|----------|----|
+| target  | 用于判断是否触及顶部或底部的目标对象  | Element | true | |
+| loading  | 是否加载中false:未加载，true:加载中  | Boolean | false | false |
+| finished  | 是否加载完成：true为加载完成，将不再触发加载  | Boolean | false | false |
+| pullDirection  | 滑动方向up:向上滑动，down：向下滑动  | String | false | 'up' |
+| defaultText  | 默认提示文字  | String | false | '上拉加载更多' |
+| loadingText  | 加载中提示文字  | String | false | '加载中....' |
+| finishedText  | 加载完成提示文字  | String | false | '已加载完成' |
+
+ #### 6、使用示例
+ ```html
+     <vlp-touch
+      :target="target"
+      :loading="loading"
+      :finished="finished"
+      pullDirection="up"
+      @load="load">
+    <div
+         id="aa"
+         style="width:100%;height:500px;overflow:auto">
+            <span v-for="(item,index) in data" :key = index>{{item}}<br/>></span>
+         </div>
+  </vlp-touch>
+ ```
+ ```js
+
+import {  VlpTouch } from 'vant-plus'
+ export default {
+  components: {
+    VlpTouch
+  },
+  data() {
+    return {
+      target: {},
+      data: [],
+      loading: false,
+      count: 0,
+      finished: false
+    }
+  },
+  created() {
+    this.data = Array(50).fill('内容')
+  },
+  mounted() {
+    this.target = document.getElementById('aa')
+  },
+  methods: {
+    load() {
+      this.loading = true
+      setTimeout(() => {
+        console.log('加载。。')
+        this.loading = false
+        this.count++
+        if (this.count === 4) this.finished = true
+      }, 1000)
+    }
+  }
  }
  ```
