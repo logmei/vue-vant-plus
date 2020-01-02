@@ -8,12 +8,16 @@
       v-on:touchcancel="touchEnd"
     >
      <slot  v-if="pullDirection==='down'" name="TopText">
-       <span class="touch-text">{{loadText}}</span>
+       <span
+       :class="'touch-text '+ (error?'touch-error-class':'')"
+       @click="clickText">{{loadText}}</span>
       </slot>
       <slot>
       </slot>
        <slot v-if="pullDirection==='up'" name="bottomText">
-       <span class="touch-text">{{loadText}}</span>
+       <span
+       :class="'touch-text '+ (error?'touch-error-class':'')"
+       @click="clickText">{{loadText}}</span>
       </slot>
   </div>
 </template>
@@ -46,6 +50,11 @@ export default {
       required: false,
       default: '已加载完成'
     },
+    errorText: {
+      type: String,
+      required: false,
+      default: '加载失败，请点击重新加载'
+    },
     finished: {
       type: Boolean,
       required: false,
@@ -58,6 +67,11 @@ export default {
       default: 'up'
     },
     loading: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    error: {
       type: Boolean,
       required: false,
       default: false
@@ -74,15 +88,20 @@ export default {
   },
   computed: {
     loadText: function() {
+      if (this.error) return this.errorText
       if (this.loading) return this.loadingText
       if (this.finished) return this.finishedText
+
       return this.defaultText
     },
     touchable: function() {
-      return !this.loading && !this.finished
+      return !this.loading && !this.finished && !this.error
     }
   },
   methods: {
+    clickText() {
+      this.error && this.$emit('load')
+    },
     touchStart(event) {
       console.log('onTouchStart', this.loading)
       this.touchable && this.onTouchStart(event)
@@ -136,5 +155,8 @@ export default {
     color:rgba(153,153,153,1);
     line-height:17px;
       }
+    .touch-error-class{
+      color: #23C2B7
+    }
 }
 </style>

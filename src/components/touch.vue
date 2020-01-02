@@ -3,6 +3,7 @@
   :target="target"
   :loading="loading"
   :finished="finished"
+  :error="error"
   pullDirection="up"
   @load="load">
     <div
@@ -24,7 +25,8 @@ export default {
       data: [],
       loading: false,
       count: 0,
-      finished: false
+      finished: false,
+      error: false
     }
   },
   created() {
@@ -36,10 +38,13 @@ export default {
   methods: {
     load() {
       this.loading = true
+      this.error = false
       setTimeout(() => {
         console.log('加载。。')
         this.loading = false
+        if (this.count === 3) this.error = true
         this.count++
+
         if (this.count === 4) this.finished = true
       }, 1000)
     }
