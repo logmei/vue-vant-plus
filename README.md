@@ -673,10 +673,16 @@ import {  VlpSteps } from 'vant-plus'
 | target  | 用于判断是否触及顶部或底部的目标对象  | Element | true | |
 | loading  | 是否加载中false:未加载，true:加载中  | Boolean | false | false |
 | finished  | 是否加载完成：true为加载完成，将不再触发加载  | Boolean | false | false |
+| error  | 是否出错  | Boolean | false | false |
 | pullDirection  | 滑动方向up:向上滑动，down：向下滑动  | String | false | 'up' |
 | defaultText  | 默认提示文字  | String | false | '上拉加载更多' |
 | loadingText  | 加载中提示文字  | String | false | '加载中....' |
 | finishedText  | 加载完成提示文字  | String | false | '已加载完成' |
+| errorText  | 加载完成提示文字  | String | false | '加载失败，请点击重新加载' |
+  #### 5、事件
+  | 参数 | 说明 | 类型 | 是否必填| 默认值|
+|------|------------|------------|----------|----|
+| load  | 上拉加载或点击报错时候的信息时触发  | function |  | |
 
  #### 6、使用示例
  ```html
@@ -684,6 +690,7 @@ import {  VlpSteps } from 'vant-plus'
       :target="target"
       :loading="loading"
       :finished="finished"
+      :error="error"
       pullDirection="up"
       @load="load">
     <div
@@ -706,7 +713,8 @@ import {  VlpTouch } from 'vant-plus'
       data: [],
       loading: false,
       count: 0,
-      finished: false
+      finished: false,
+      error: false
     }
   },
   created() {
@@ -721,6 +729,7 @@ import {  VlpTouch } from 'vant-plus'
       setTimeout(() => {
         console.log('加载。。')
         this.loading = false
+        if (this.count === 3) this.error = true
         this.count++
         if (this.count === 4) this.finished = true
       }, 1000)
